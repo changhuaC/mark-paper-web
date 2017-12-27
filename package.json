@@ -1,0 +1,37 @@
+{
+  "name": "markpaperweb",
+  "version": "1.0.0",
+  "description": "mark examinnation paper webfront",
+  "main": "index.js",
+  "scripts": {
+    "test": "webpack",
+    "build": "webpack",
+    "server": "webpack-dev-server --open --hot"
+  },
+  "keywords": [
+    "markpaper"
+  ],
+  "author": "changh",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.5.11"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.13.1",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "file-loader": "^1.1.6",
+    "html-webpack-plugin": "^2.30.1",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  }
+}
