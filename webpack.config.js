@@ -22,6 +22,13 @@ module.export = {
                     preset: ['@babel/preset-env']
                 }
             },
+            {
+                test: /\.vue$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'vue-loader'
+                }
+            },
             // 加载样式文件，转换提取内部样式
             {
                 test: /.css$/,
