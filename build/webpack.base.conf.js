@@ -5,15 +5,19 @@ import devConfig from '../config/dev-env.conf'
 import prodConfig from '../config/prod-env.conf'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
+const contextPath = path.resolve(__dirname, '../') // 基础目录，绝对路径，用于从配置中解析入口起点(entry point)和 loader
 const distPath = path.resolve(__dirname, 'dist') // 根目录路径
 const templatePath = path.resolve(__dirname, 'template') // 模版目录路径
 
 export default {
+    context: contextPath,
     devtool: 'source-map',
-    entry: './src/main.js',
+    entry: {
+        app: './src/main.js'
+    },
     output: {
-        filename: 'bundle.js',
-        path: distPath
+        filename: '[name].js',
+        path: prodConfig.assetsRoot
     },
     module: {
         rules: [

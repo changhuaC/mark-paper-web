@@ -8,7 +8,7 @@ const prodEnvConf = merge(baseConf, {
     NODE_ENV: '"production"',
     // 模版路径
     index: path.resolve(__dirname, '../dist/index.html'),
-    // 路径配置
+    // 打包路径
     assetsRoot: path.resolve(__dirname, '../dist'),
     // 调试配置
     productionSourceMap: true,
