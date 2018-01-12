@@ -14,7 +14,7 @@ const templatePath = path.resolve(__dirname, 'template') // 模版目录路径
 const srcPath = path.join(__dirname, '..', 'src') // 源码路径
 
 // load生成器
-function generateLoaders (loader, loaderOptions) {
+const generateLoaders = function (loader, loaderOptions) {
     const loaders = [{
         loader: 'css-loader',
         options: {
@@ -40,6 +40,14 @@ function generateLoaders (loader, loaderOptions) {
     } else {
         return ['vue-style-loader'].concat(loaders)
     }
+}
+
+const assetsPath = function (_path) {
+    const assetsSubDirectory = process.env.NODE_ENV === 'production'
+        ? prodConfig.assetsSubDirectory
+        : devConfig.assetsSubDirectory
+
+    return path.posix.join(assetsSubDirectory, _path)
 }
 
 export default {
@@ -96,24 +104,32 @@ export default {
                     }
                 }
             },
-            // 加载样式文件，转换提取内部样式
-            {
-                test: /.css$/,
-                use: ['style-loader', 'css-loader']
-            },
             // 根据文件路径加载图片文件
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 use: ['url-loader'],
                 options: {
                     limit: 10000,
-                    name: utils.assetsPath('img/[name].[hash:7].[ext]')
+                    name: assetsPath('img/[name].[hash:7].[ext]')
+                }
+            },
+            // 根据文件路径加载图片文件
+            {
+                test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+                use: ['url-loader'],
+                options: {
+                    limit: 10000,
+                    name: assetsPath('media/[name].[hash:7].[ext]')
                 }
             },
             // 加载字体文件
             {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: ['file-loader']
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                use: ['url-loader'],
+                options: {
+                    limit: 10000,
+                    name: assetsPath('fonts/[name].[hash:7].[ext]')
+                }
             }
         ]
     },
