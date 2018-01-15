@@ -1,38 +1,38 @@
 'use strict'
 import path from 'path'
-import utils from './utils'
+import prodConfig from '../config/prod-env.conf'
 import webpack from 'webpack'
-import {generateLoaders, assetsPath} from '../util/loader-util'
+import {assetsPath, styleLoaders} from '../util/loader-util'
 import merge from 'webpack-merge'
 import baseWebpackConfig from './webpack.base.conf'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import OptimizeCSSPlugin from 'optimize-css-assets-webpack-plugin'
+import CompressionWebpackPlugin from 'compression-webpack-plugin'
+import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 
-const env = process.env.NODE_ENV === 'testing'
-    ? require('../config/test.env')
-    : require('../config/prod.env')
+const templatePath = path.resolve(__dirname, 'template') // 模版目录路径
 
 const webpackConfig = merge(baseWebpackConfig, {
     module: {
-        rules: utils.styleLoaders({
-            sourceMap: config.build.productionSourceMap,
+        rules: styleLoaders({
+            sourceMap: prodConfig.productionSourceMap,
             extract: true,
             usePostCSS: true
         })
     },
-    devtool: config.build.productionSourceMap ? config.build.devtool : false,
+    devtool: prodConfig.productionSourceMap ? prodConfig.devtool : false,
     output: {
-        path: config.build.assetsRoot,
+        path: prodConfig.assetsRoot,
         filename: assetsPath('js/[name].[chunkhash].js'),
         chunkFilename: assetsPath('js/[id].[chunkhash].js')
     },
     plugins: [
-    // http://vuejs.github.io/vue-loader/en/workflow/production.html
+        // http://vuejs.github.io/vue-loader/en/workflow/production.html
         new webpack.DefinePlugin({
-            'process.env': env
+            'process.env': prodConfig.NODE_ENV
         }),
         new UglifyJsPlugin({
             uglifyOptions: {
@@ -40,59 +40,54 @@ const webpackConfig = merge(baseWebpackConfig, {
                     warnings: false
                 }
             },
-            sourceMap: config.build.productionSourceMap,
+            sourceMap: prodConfig.productionSourceMap,
             parallel: true
         }),
-        // extract css into its own file
+        // 抽取单独css样式文件
         new ExtractTextPlugin({
-            filename: utils.assetsPath('css/[name].[contenthash].css'),
-            // Setting the following option to `false` will not extract CSS from codesplit chunks.
-            // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
-            // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
-            // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
+            filename: assetsPath('css/[name].[contenthash].css'),
+            // 如果设置为false，将不会把css分割成小的代码块
+            // 当这些分割后的样式代码块被webpack夹在后，这些样式将会动态的由style-loader 动态的插入并替换
+            // 现在设置为true 因为设置为false的时候代码分割快将会包含sourcemaps
+            // 增加文件大小: https://github.com/vuejs-templates/webpack/issues/1110
             allChunks: true
         }),
-        // Compress extracted CSS. We are using this plugin so that possible
-        // duplicated CSS from different components can be deduped.
+        // 用这个插件压缩抽取的样式文件.
+        // 从不同的组件中抽取样式，去重复.
         new OptimizeCSSPlugin({
-            cssProcessorOptions: config.build.productionSourceMap
+            cssProcessorOptions: prodConfig.productionSourceMap
                 ? { safe: true, map: { inline: false } }
                 : { safe: true }
         }),
-        // generate dist index.html with correct asset hash for caching.
-        // you can customize output by editing /index.html
-        // see https://github.com/ampedandwired/html-webpack-plugin
+        // 为index.html分配正确的hash编码.
+        // 更多可查看 https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
-            filename: process.env.NODE_ENV === 'testing'
-                ? 'index.html'
-                : config.build.index,
-            template: 'index.html',
+            filename: prodConfig.index,
+            template: path.resolve(templatePath, 'index.tmp.html'),
             inject: true,
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
                 removeAttributeQuotes: true
-                // more options:
+                // 更多选项:
                 // https://github.com/kangax/html-minifier#options-quick-reference
             },
-            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+            // 根据开发依赖排序依赖块
             chunksSortMode: 'dependency'
         }),
-        // keep module.id stable when vender modules does not change
+        // 保证模块id在hash以后不变
         new webpack.HashedModuleIdsPlugin(),
-        // enable scope hoisting
+        // 作用域提升
         new webpack.optimize.ModuleConcatenationPlugin(),
-        // split vendor js into its own file
+        // 抽取第三方引用包到一个独立文件
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks (module) {
-                // any required modules inside node_modules are extracted to vendor
+                // 把依赖的模块文件从node_modules目录里抽取出来
                 return (
-                    module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-              path.join(__dirname, '../node_modules')
-          ) === 0
+                    module.resource && /\.js$/.test(module.resource) && module.resource.indexOf(
+                        path.join(__dirname, '../node_modules')
+                    ) === 0
                 )
             }
         }),
@@ -112,38 +107,31 @@ const webpackConfig = merge(baseWebpackConfig, {
             minChunks: 3
         }),
 
-        // copy custom static assets
+        // 复制静态文件
         new CopyWebpackPlugin([
             {
                 from: path.resolve(__dirname, '../static'),
-                to: config.build.assetsSubDirectory,
+                to: prodConfig.assetsSubDirectory,
                 ignore: ['.*']
             }
         ])
     ]
 })
-
-if (config.build.productionGzip) {
-    const CompressionWebpackPlugin = require('compression-webpack-plugin')
-
+// 启用Gzip压缩
+if (prodConfig.productionGzip) {
     webpackConfig.plugins.push(
         new CompressionWebpackPlugin({
             asset: '[path].gz[query]',
             algorithm: 'gzip',
-            test: new RegExp(
-                '\\.(' +
-        config.build.productionGzipExtensions.join('|') +
-        ')$'
-            ),
+            test: new RegExp('\\.(' + prodConfig.productionGzipExtensions.join('|') + ')$'),
             threshold: 10240,
             minRatio: 0.8
         })
     )
 }
 
-if (config.build.bundleAnalyzerReport) {
-    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+if (prodConfig.bundleAnalyzerReport) {
     webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
-module.exports = webpackConfig
+export default {webpackConfig}
