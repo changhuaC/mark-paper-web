@@ -1,54 +1,17 @@
 'use strict'
-import webpack from 'webpack'
+
 import path from 'path'
 import devConfig from '../config/dev-env.conf'
 import prodConfig from '../config/prod-env.conf'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+// import HtmlWebpackPlugin from 'html-webpack-plugin'
+// import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import {generateLoaders, assetsPath} from '../util/loader-util'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const useSourceMap = isProduction ? prodConfig.productionSourceMap : devConfig.cssSourceMap
 const contextPath = path.resolve(__dirname, '../') // 基础目录，绝对路径，用于从配置中解析入口起点(entry point)和 loader
 const distPath = path.resolve(__dirname, 'dist') // 根目录路径
-const templatePath = path.resolve(__dirname, 'template') // 模版目录路径
 const srcPath = path.join(__dirname, '..', 'src') // 源码路径
-
-// load生成器
-const generateLoaders = function (loader, loaderOptions) {
-    const loaders = [{
-        loader: 'css-loader',
-        options: {
-            sourceMap: useSourceMap
-        }
-    }]
-
-    if (loader) {
-        loaders.push({
-            loader: loader + '-loader',
-            options: Object.assign({}, loaderOptions, {
-                sourceMap: useSourceMap
-            })
-        })
-    }
-    // 将样式提取成一个独立的文件
-    // 在打包生产的时候
-    if (isProduction) {
-        return ExtractTextPlugin.extract({
-            use: loaders,
-            fallback: 'vue-style-loader'
-        })
-    } else {
-        return ['vue-style-loader'].concat(loaders)
-    }
-}
-
-const assetsPath = function (_path) {
-    const assetsSubDirectory = process.env.NODE_ENV === 'production'
-        ? prodConfig.assetsSubDirectory
-        : devConfig.assetsSubDirectory
-
-    return path.posix.join(assetsSubDirectory, _path)
-}
 
 export default {
     context: contextPath,
@@ -137,13 +100,13 @@ export default {
         contentBase: distPath,
         historyApiFallback: true,
         inline: true
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: '登录',
-            template: pathTool.resolve(templatePath, 'tmp-index.html'),
-            filename: 'index.html',
-            hash: true
-        })
-    ]
+    }
+    // plugins: [
+    //     new HtmlWebpackPlugin({
+    //         title: '登录',
+    //         template: pathTool.resolve(templatePath, 'tmp-index.html'),
+    //         filename: 'index.html',
+    //         hash: true
+    //     })
+    // ]
 }

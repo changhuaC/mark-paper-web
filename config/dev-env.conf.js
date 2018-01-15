@@ -11,7 +11,7 @@ const devEnvConf = merge(baseConf, {
     // dev-webpack-server 配置参数
     host: 'localhost', // 服务域，可以被 process.env.HOST 参数覆盖
     port: 8080, // 端口,可以被 process.env.PORT覆盖，如果这个端口被使用，会自动找一个空闲端口
-    autoOpenBrowser: false, // 是否自动打开浏览器
+    autoOpenBrowser: true, // 是否自动打开浏览器
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
