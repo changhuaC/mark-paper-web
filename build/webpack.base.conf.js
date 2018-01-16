@@ -100,12 +100,12 @@ export default {
 
             }
         ]
-    },
-    devServer: {
-        contentBase: distPath,
-        historyApiFallback: true,
-        inline: true
     }
+    // devServer: {
+    //     contentBase: distPath,
+    //     historyApiFallback: true,
+    //     inline: true
+    // }
     // plugins: [
     //     new HtmlWebpackPlugin({
     //         title: '登录',

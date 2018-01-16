@@ -1,6 +1,6 @@
 
 import Vue from 'vue'
-// import UserDetail from './pages/user-detail.vue'
+import UserDetail from './pages/user-detail.vue'
 import router from './config/router'
 Vue.config.productionTip = false
 
