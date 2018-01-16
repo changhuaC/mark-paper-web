@@ -8,17 +8,15 @@ import webpackBaseConfig from './webpack.base.conf'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin'
 
-const templatePath = path.resolve(__dirname, 'template') // 模版目录路径
+const templatePath = path.resolve(__dirname, '../template') // 模版目录路径
 const HOST = process.env.Host || devConfig.host
-const PORT = process.env.PORT && Number(process.env.PORT)
+const PORT = devConfig.port
 
-const devWebpackConfig = merge(webpackBaseConfig, {
+export default merge(webpackBaseConfig, {
     module: {
-        rules: [
-            styleLoaders({ sourceMap: devConfig.cssSourceMap, usePostCSS: true })
-        ]
+        rules: styleLoaders({ sourceMap: devConfig.cssSourceMap, usePostCSS: true })
     },
-    devTool: devConfig.devTool,
+    devtool: devConfig.devtool,
     // 开发服务器配置
     devServer: {
         clientLogLevel: 'warning',
@@ -64,4 +62,3 @@ const devWebpackConfig = merge(webpackBaseConfig, {
 
     ]
 })
-export default {devWebpackConfig}

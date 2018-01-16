@@ -13,7 +13,7 @@ const prodEnvConf = merge(baseConf, {
     // 调试配置
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
-    devtool: '#source-map',
+    devTool: '#source-map',
 
     // 文件GZIP压缩参数配置，如果要启用GZIP压缩，先要执行下面安装
     // npm install --save-dev compression-webpack-plugin

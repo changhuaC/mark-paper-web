@@ -79,7 +79,6 @@ const styleLoaders = function (options) {
             use: loader
         })
     }
-
     return output
 }
 
