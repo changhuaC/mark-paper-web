@@ -1,14 +1,15 @@
 <template>
   <div class="index-container">
     <div class="login-container">
-      <h1 v-text="msg"></h1>
+      <h1 v-text="sitName"></h1>
+        <h2 v-text="slogan"></h2>
       <div class="form-container">
-        <form>
+        <form v-on:submit.prevent>
           <div class="user-account">
-            <input placeholder="请输入手机号或邮箱" type="text">
+            <input id="user-account" v-model="userAccount" v-on:focus="clearInfo" placeholder="请输入手机号或邮箱" type="text">
           </div>
           <div class="user-password">
-              <input placeholder="请输入密码" type="password">
+              <input id="user-password" v-model="userPassword" v-on:focus="clearInfo" placeholder="请输入密码" type="password">
           </div>
           <div class="find-password">
             <div>
@@ -16,27 +17,49 @@
             </div>
           </div>
           <div>
-              <button type="submit" class="button-login">登陆</button>
+              <button type="submit" v-on:click="login"  class="button-login">登陆</button>
           </div>
         </form>
       </div>
     </div>
     <div class="regist-container">
-      <div>没有zhanghao</div>
-      <div></div>
+        <div>没有帐号？</div>
+        <div></div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'index',
-    data() {
-      return {
-        msg: '欢迎来到新世界'
-      }
+    export default {
+        name: 'index',
+        data() {
+            return {
+                sitName: '好评',
+                slogan:'上好评，享好评',
+                userAccount:'',
+                userPassword:''
+            }
+        },
+        methods:{
+            login(){
+                if(this.userAccount.length<1){
+                    this.userAccount='请输入密码'
+                }
+                console.log(this.userAccount+this.userPassword)
+            },
+            clearInfo(event,target){
+                console.log(event)
+                console.log(target)
+                if(this.userAccount==='请输入密码'){
+                    this.userAccount=''
+                }
+            },
+            checkLoginInfo(){
+                console.log("checkLoginInfo")
+                return false
+            }
+        }
     }
-  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
