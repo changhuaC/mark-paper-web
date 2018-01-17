@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="regist-container">
-      <div></div>
+      <div>没有zhanghao</div>
       <div></div>
     </div>
   </div>
