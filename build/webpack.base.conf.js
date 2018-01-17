@@ -18,6 +18,7 @@ export default {
     devtool: 'source-map',
     entry: {
         app: './src/main.js'
+
     },
     output: {
         filename: '[name].js',
@@ -101,17 +102,4 @@ export default {
             }
         ]
     }
-    // devServer: {
-    //     contentBase: distPath,
-    //     historyApiFallback: true,
-    //     inline: true
-    // }
-    // plugins: [
-    //     new HtmlWebpackPlugin({
-    //         title: '登录',
-    //         template: pathTool.resolve(templatePath, 'tmp-index.html'),
-    //         filename: 'index.html',
-    //         hash: true
-    //     })
-    // ]
 }

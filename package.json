@@ -15,6 +15,7 @@
   "author": "changh",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.17.1",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1"
   },
@@ -42,6 +43,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "uglifyjs-webpack-plugin": "^1.1.6",
+    "url-loader": "^0.6.2",
     "vue-loader": "^13.7.0",
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.13",

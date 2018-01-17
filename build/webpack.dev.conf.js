@@ -20,9 +20,10 @@ export default merge(webpackBaseConfig, {
     // 开发服务器配置
     devServer: {
         clientLogLevel: 'warning',
-        historyApiFallback: true,
+        historyApiFallback: devConfig.historyApiFallback,
         hot: true,
         compress: true,
+        inline: true,
         host: HOST,
         port: PORT || devConfig.port,
         open: devConfig.autoOpenBrowser,
@@ -31,7 +32,7 @@ export default merge(webpackBaseConfig, {
             : false,
         publicPath: devConfig.assetsPublicPath,
         proxy: devConfig.proxyTable,
-        quiet: true, // 静默启动，针对FriendlyErrorsPlugin友好错误提示插件
+        quiet: false, // 静默启动，针对FriendlyErrorsPlugin友好错误提示插件
         watchOptions: {
             poll: devConfig.poll
         }
