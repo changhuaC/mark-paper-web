@@ -1,5 +1,8 @@
 <template>
   <div class="index-container">
+    <div class="index-title">
+      <div class="download">下载</div>
+    </div>
     <div class="login-container">
       <h1 v-text="sitName"></h1>
         <h2 v-text="slogan"></h2>
@@ -24,7 +27,7 @@
     </div>
     <div class="regist-container">
         <div>没有帐号？</div>
-        <div></div>
+        <router-link to="regist">注册</router-link>
     </div>
   </div>
 </template>
@@ -35,7 +38,7 @@
         data() {
             return {
                 sitName: '好评',
-                slogan:'上好评，享好评',
+                slogan:'用好评，尽享评卷新体验',
                 userAccount:'',
                 userPassword:''
             }
@@ -72,29 +75,38 @@
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    input{
-        height: 48px;
-        line-height: 24;
-        background: transparent;
-        border:none;
-        outline:none;
-        resize: none;
-        font-size: 18px;
-        color: #9da09b;
+	.index-title{
         width: 100%;
-      }
-    .login-container {
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      border:0px;
-      border-top-left-radius: 2px;
-      border-top-right-radius: 2px;
-      box-shadow: 0 1px 3px rgba(26,26,26,.1);
-      background-color: white;
-      height: 503px;
-      width: 432px;
+		height: 3rem;
+		background-color: #5e9ce4;
+		opacity: 0.5;
+		top: 0;
+		left: 0;
+		position: fixed;
+		z-index: 500;
+		vertical-align: bottom;
+		box-shadow: 0 1px 3px rgba(26, 26, 26, 0.5);
+        .download{
+            margin-top: 20px;
+            margin-right: 10px;
+            float: right;
+            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color:white;
+            font-size: 1.33rem;
+        }
+    }
+	.login-container {
+		display: flex;
+		flex-flow: column;
+		justify-content: center;
+		align-items: center;
+		border:0px;
+		border-top-left-radius: 2px;
+		border-top-right-radius: 2px;
+		box-shadow: 0 1px 3px rgba(26,26,26,.1);
+		background-color: white;
+		height: 25.2rem;
+		width: 21.5rem;
       .form-container{
         width: 80%;
         .user-account{
@@ -128,15 +140,36 @@
       }
     }
     .regist-container{
-      box-shadow: 0 1px 3px rgba(26,26,26,.1);
-      border-bottom-left-radius: 2px;
-      border-bottom-right-radius: 2px;
-      border:0px;
-      border-top: 1px solid #ebebeb;
-      height: 70px;
-      width: 432px;
-      background-color: #f6f6f6;
-      display: flex;
+		box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
+		border-bottom-left-radius: 2px;
+		border-bottom-right-radius: 2px;
+		border: 0px;
+		border-top: 1px solid #ebebeb;
+		height: 36px;
+		width: 277px;
+		background-color: #f6f6f6;
+		display: flex;
+		padding: 20px 5px 20px 150px;
     }
+    a{
+      	text-decoration: none;  
+      	color:#66b1ee
+    }
+    a:hover{
+      	text-decoration:underline;
+      	color: #0f88eb;
+    }
+    input{
+        height: 48px;
+        line-height: 24;
+        background: transparent;
+        border:none;
+        outline:none;
+        resize: none;
+        font-size: 18px;
+        color: #9da09b;
+        width: 100%;
+      }
+
   }
 </style>
