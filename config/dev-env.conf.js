@@ -15,7 +15,7 @@ const devEnvConf = merge(baseConf, {
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
-    historyApiFallback: true,
+    historyApiFallback: false,
     // 代码检查配置
     useEslint: true,
     showEslintErrorsInOverlay: false,
