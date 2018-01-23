@@ -35,30 +35,30 @@
 <script>
     export default {
         name: 'index',
-        data() {
+        data () {
             return {
                 sitName: '好评',
-                slogan:'用好评，尽享评卷新体验',
-                userAccount:'',
-                userPassword:''
+                slogan: '用好评，尽享评卷新体验',
+                userAccount: '',
+                userPassword: ''
             }
         },
-        methods:{
-            login(){
-                if(this.userAccount.length<1){
-                    this.userAccount='请输入密码'
+        methods: {
+            login () {
+                if (this.userAccount.length < 1) {
+                    this.userAccount = '请输入密码'
                 }
-                console.log(this.userAccount+this.userPassword)
+                console.log(this.userAccount + this.userPassword)
             },
-            clearInfo(event,target){
+            clearInfo (event, target) {
                 console.log(event)
                 console.log(target)
-                if(this.userAccount==='请输入密码'){
-                    this.userAccount=''
+                if (this.userAccount === '请输入密码') {
+                    this.userAccount = ''
                 }
             },
-            checkLoginInfo(){
-                console.log("checkLoginInfo")
+            checkLoginInfo () {
+                console.log('checkLoginInfo')
                 return false
             }
         }
