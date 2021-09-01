@@ -15,7 +15,7 @@
   "author": "changh",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.21.1",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1"
   },
